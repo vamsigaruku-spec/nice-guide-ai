@@ -1,0 +1,91 @@
+guideline_id,title,condition,population,section,recommendation_id,recommendation_text,source,source_type,source_url,version,publication_date,last_updated,status,is_active,retrieval_text,chunk_id
+DEV-HTN,Hypertension Management,Hypertension,Adults,Assessment,1.1.1,Adults with suspected hypertension should have their blood pressure assessed using an appropriate diagnostic measurement process.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults
+Section: Assessment
+Recommendation: 1.1.1
+Guidance: Adults with suspected hypertension should have their blood pressure assessed using an appropriate diagnostic measurement process.",DEV-HTN_1_1_1
+DEV-HTN,Hypertension Management,Hypertension,Adults,Lifestyle,1.2.1,Adults with hypertension should receive information about lifestyle measures that may help reduce cardiovascular risk.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults
+Section: Lifestyle
+Recommendation: 1.2.1
+Guidance: Adults with hypertension should receive information about lifestyle measures that may help reduce cardiovascular risk.",DEV-HTN_1_2_1
+DEV-HTN,Hypertension Management,Hypertension,Adults aged 80 years and over,Treatment,1.3.1,"Treatment decisions for adults aged 80 years and over should take account of clinical circumstances, frailty and individual treatment goals.",Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults aged 80 years and over
+Section: Treatment
+Recommendation: 1.3.1
+Guidance: Treatment decisions for adults aged 80 years and over should take account of clinical circumstances, frailty and individual treatment goals.",DEV-HTN_1_3_1
+DEV-T2D,Type 2 Diabetes Management,Type 2 diabetes,Adults,Assessment,2.1.1,Adults diagnosed with type 2 diabetes should receive an assessment of relevant cardiovascular and metabolic risk factors.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Type 2 Diabetes Management
+Condition: Type 2 diabetes
+Population: Adults
+Section: Assessment
+Recommendation: 2.1.1
+Guidance: Adults diagnosed with type 2 diabetes should receive an assessment of relevant cardiovascular and metabolic risk factors.",DEV-T2D_2_1_1
+DEV-ASTHMA,Asthma Management,Asthma,Adults,Assessment,3.1.1,Adults with suspected asthma should undergo an appropriate clinical assessment before a diagnosis is confirmed.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Asthma Management
+Condition: Asthma
+Population: Adults
+Section: Assessment
+Recommendation: 3.1.1
+Guidance: Adults with suspected asthma should undergo an appropriate clinical assessment before a diagnosis is confirmed.",DEV-ASTHMA_3_1_1
+DEV-ASTHMA,Asthma Management,Asthma,Adults,Assessment,3.1.2,Adults with suspected asthma should have their symptoms and relevant clinical history reviewed as part of the assessment.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Asthma Management
+Condition: Asthma
+Population: Adults
+Section: Assessment
+Recommendation: 3.1.2
+Guidance: Adults with suspected asthma should have their symptoms and relevant clinical history reviewed as part of the assessment.",DEV-ASTHMA_3_1_2
+DEV-ASTHMA,Asthma Management,Asthma,Adults,Monitoring,3.2.1,Adults receiving asthma management should have their symptoms and treatment response reviewed regularly.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Asthma Management
+Condition: Asthma
+Population: Adults
+Section: Monitoring
+Recommendation: 3.2.1
+Guidance: Adults receiving asthma management should have their symptoms and treatment response reviewed regularly.",DEV-ASTHMA_3_2_1
+DEV-ASTHMA,Asthma Management,Asthma,Adults,Education,3.3.1,Adults with asthma should receive information about recognising changes in symptoms and following their agreed management plan.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Asthma Management
+Condition: Asthma
+Population: Adults
+Section: Education
+Recommendation: 3.3.1
+Guidance: Adults with asthma should receive information about recognising changes in symptoms and following their agreed management plan.",DEV-ASTHMA_3_3_1
+DEV-T2D,Type 2 Diabetes Management,Type 2 diabetes,Adults,Monitoring,2.2.1,Adults with type 2 diabetes should have relevant clinical measurements reviewed at appropriate intervals.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Type 2 Diabetes Management
+Condition: Type 2 diabetes
+Population: Adults
+Section: Monitoring
+Recommendation: 2.2.1
+Guidance: Adults with type 2 diabetes should have relevant clinical measurements reviewed at appropriate intervals.",DEV-T2D_2_2_1
+DEV-T2D,Type 2 Diabetes Management,Type 2 diabetes,Adults,Lifestyle,2.3.1,Adults with type 2 diabetes should receive information about lifestyle measures relevant to their individual circumstances.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Type 2 Diabetes Management
+Condition: Type 2 diabetes
+Population: Adults
+Section: Lifestyle
+Recommendation: 2.3.1
+Guidance: Adults with type 2 diabetes should receive information about lifestyle measures relevant to their individual circumstances.",DEV-T2D_2_3_1
+DEV-T2D,Type 2 Diabetes Management,Type 2 diabetes,Adults,Risk Assessment,2.4.1,Adults with type 2 diabetes should have relevant cardiovascular risk factors considered during clinical review.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Type 2 Diabetes Management
+Condition: Type 2 diabetes
+Population: Adults
+Section: Risk Assessment
+Recommendation: 2.4.1
+Guidance: Adults with type 2 diabetes should have relevant cardiovascular risk factors considered during clinical review.",DEV-T2D_2_4_1
+DEV-HTN,Hypertension Management,Hypertension,Adults,Monitoring,1.4.1,Adults with hypertension should have their blood pressure and relevant treatment response reviewed at appropriate intervals.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults
+Section: Monitoring
+Recommendation: 1.4.1
+Guidance: Adults with hypertension should have their blood pressure and relevant treatment response reviewed at appropriate intervals.",DEV-HTN_1_4_1
+DEV-HTN,Hypertension Management,Hypertension,Adults,Risk Assessment,1.5.1,Adults with hypertension should have relevant cardiovascular risk factors considered during clinical assessment.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults
+Section: Risk Assessment
+Recommendation: 1.5.1
+Guidance: Adults with hypertension should have relevant cardiovascular risk factors considered during clinical assessment.",DEV-HTN_1_5_1
+DEV-HTN,Hypertension Management,Hypertension,Adults,Lifestyle,1.6.1,Adults with hypertension should receive information about lifestyle measures relevant to cardiovascular risk reduction.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults
+Section: Lifestyle
+Recommendation: 1.6.1
+Guidance: Adults with hypertension should receive information about lifestyle measures relevant to cardiovascular risk reduction.",DEV-HTN_1_6_1
+DEV-HTN,Hypertension Management,Hypertension,Adults aged 80 years and over,Monitoring,1.7.1,Adults aged 80 years and over receiving hypertension management should have treatment response reviewed in the context of their individual circumstances.,Synthetic development dataset,synthetic_development_data,,development,2026-01-01,2026-01-01,active,True,"Guideline: Hypertension Management
+Condition: Hypertension
+Population: Adults aged 80 years and over
+Section: Monitoring
+Recommendation: 1.7.1
+Guidance: Adults aged 80 years and over receiving hypertension management should have treatment response reviewed in the context of their individual circumstances.",DEV-HTN_1_7_1

@@ -1,0 +1,11 @@
+numpy
+pandas
+sentence-transformers
+rank-bm25
+groq
+fastapi
+uvicorn
+streamlit
+pydantic
+httpx
+pytest
