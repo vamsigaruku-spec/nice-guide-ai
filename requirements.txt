@@ -9,4 +9,3 @@ streamlit
 pydantic
 httpx
 pytest
-torchvision
