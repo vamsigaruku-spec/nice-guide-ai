@@ -6,7 +6,7 @@ import streamlit as st
 
 
 # ============================================================
-# PAGE CONFIG
+# PAGE CONFIGURATION
 # ============================================================
 
 st.set_page_config(
@@ -18,8 +18,7 @@ st.set_page_config(
 
 
 # ============================================================
-# STREAMLIT SECRETS
-# Must be loaded BEFORE importing app.rag
+# LOAD STREAMLIT SECRET
 # ============================================================
 
 try:
@@ -30,55 +29,43 @@ except Exception:
 
 
 # ============================================================
-# BACKEND IMPORT
+# BACKEND
 # ============================================================
 
 from app.rag import run_validated_rag
 
 
 # ============================================================
-# CUSTOM CSS
+# CUSTOM STYLE
 # ============================================================
 
 st.markdown(
     """
     <style>
 
-    .main-title {
-        font-size: 2.7rem;
+    .title {
+        font-size: 2.6rem;
         font-weight: 800;
-        margin-bottom: 0.1rem;
+        margin-bottom: 0;
     }
 
     .subtitle {
-        color: #9aa3b2;
         font-size: 1.05rem;
+        color: #9aa3b2;
+        margin-top: 0.2rem;
         margin-bottom: 1.2rem;
     }
 
-    .answer-card {
-        padding: 1.2rem;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.10);
-        background: rgba(255,255,255,0.035);
-        margin-top: 0.5rem;
-    }
-
-    .evidence-title {
-        font-size: 1.15rem;
-        font-weight: 750;
-        margin-bottom: 0.25rem;
+    .evidence-heading {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
     }
 
     .evidence-meta {
         color: #9aa3b2;
-        font-size: 0.88rem;
+        font-size: 0.85rem;
         margin-bottom: 0.7rem;
-    }
-
-    .section-label {
-        font-size: 1.05rem;
-        font-weight: 700;
     }
 
     </style>
@@ -92,7 +79,7 @@ st.markdown(
 # ============================================================
 
 st.markdown(
-    '<div class="main-title">🩺 NICE Guide AI</div>',
+    '<div class="title">🩺 NICE Guide AI</div>',
     unsafe_allow_html=True,
 )
 
@@ -105,8 +92,8 @@ st.markdown(
 
 st.warning(
     "Development / portfolio prototype only. "
-    "Uses a synthetic clinical-guidance development corpus. "
-    "Not a medical device, clinical decision-support system, "
+    "This application uses a synthetic clinical-guidance development corpus. "
+    "It is not a medical device, clinical decision-support system, "
     "or substitute for professional clinical judgement."
 )
 
@@ -117,7 +104,7 @@ st.warning(
 
 with st.sidebar:
 
-    st.header("RAG Configuration")
+    st.header("Configuration")
 
     top_k = st.slider(
         "Evidence chunks",
@@ -125,7 +112,7 @@ with st.sidebar:
         max_value=5,
         value=3,
         step=1,
-        help="Number of evidence chunks retrieved for the answer.",
+        help="Number of evidence chunks used by the RAG pipeline.",
     )
 
     entailment_threshold = st.slider(
@@ -134,14 +121,14 @@ with st.sidebar:
         max_value=0.95,
         value=0.70,
         step=0.05,
-        help="Threshold used for claim-level entailment validation.",
+        help="Threshold used for claim-level grounding validation.",
     )
 
     st.divider()
 
-    st.subheader("Pipeline")
+    st.subheader("RAG pipeline")
 
-    pipeline = [
+    pipeline_steps = [
         "Semantic retrieval",
         "BM25 retrieval",
         "Reciprocal Rank Fusion",
@@ -152,7 +139,7 @@ with st.sidebar:
         "NLI claim validation",
     ]
 
-    for step in pipeline:
+    for step in pipeline_steps:
         st.write(f"✓ {step}")
 
     st.divider()
@@ -173,7 +160,7 @@ with st.sidebar:
 
 
 # ============================================================
-# QUESTION INPUT
+# INPUT
 # ============================================================
 
 st.subheader("Ask a clinical-guidance question")
@@ -184,27 +171,27 @@ query = st.text_area(
         "Example: What education should be provided "
         "to adults with asthma?"
     ),
-    height=115,
+    height=120,
 )
 
 
 # ============================================================
-# RUN BUTTON
+# GENERATE
 # ============================================================
 
-generate = st.button(
+generate_button = st.button(
     "Generate grounded answer",
     type="primary",
 )
 
 
 # ============================================================
-# EXECUTE RAG PIPELINE
+# RUN PIPELINE
 # ============================================================
 
-if generate:
+if generate_button:
 
-    if not isinstance(query, str) or not query.strip():
+    if not query or not query.strip():
 
         st.error(
             "Please enter a clinical-guidance question."
@@ -215,7 +202,7 @@ if generate:
         start_time = time.perf_counter()
 
         with st.spinner(
-            "Retrieving evidence and validating the answer..."
+            "Retrieving evidence, generating answer and validating claims..."
         ):
 
             try:
@@ -230,13 +217,13 @@ if generate:
                     time.perf_counter() - start_time
                 ) * 1000
 
-                st.session_state["result"] = result
-                st.session_state["latency_ms"] = latency_ms
+                st.session_state["rag_result"] = result
+                st.session_state["rag_latency_ms"] = latency_ms
 
             except Exception as exc:
 
                 st.error(
-                    "The application encountered an error."
+                    "The RAG pipeline could not complete the request."
                 )
 
                 with st.expander("Technical details"):
@@ -247,16 +234,16 @@ if generate:
 
 
 # ============================================================
-# DISPLAY STORED RESULT
+# RESULT
 # ============================================================
 
-if "result" in st.session_state:
+if "rag_result" in st.session_state:
 
-    result = st.session_state["result"]
+    result = st.session_state["rag_result"]
 
     latency_ms = st.session_state.get(
-        "latency_ms",
-        0,
+        "rag_latency_ms",
+        0.0,
     )
 
     answer = str(
@@ -264,7 +251,7 @@ if "result" in st.session_state:
             "answer",
             "",
         )
-    )
+    ).strip()
 
     evidence = result.get(
         "evidence",
@@ -315,8 +302,8 @@ if "result" in st.session_state:
     )
 
     cited_ids = [
-        str(value)
-        for value in citation_check.get(
+        str(cid)
+        for cid in citation_check.get(
             "cited_ids",
             [],
         )
@@ -345,45 +332,39 @@ if "result" in st.session_state:
 
 
     # ========================================================
-    # STATUS METRICS
+    # STATUS
     # ========================================================
 
-    col1, col2, col3, col4 = st.columns(4)
+    status_1, status_2, status_3, status_4 = st.columns(4)
 
-    with col1:
+    with status_1:
 
         st.metric(
             "Evidence",
-            (
-                "Sufficient"
-                if evidence_sufficient
-                else "Insufficient"
-            ),
+            "Sufficient"
+            if evidence_sufficient
+            else "Insufficient",
         )
 
-    with col2:
+    with status_2:
 
         st.metric(
             "Citations",
-            (
-                "Valid"
-                if citation_valid
-                else "Invalid"
-            ),
+            "Valid"
+            if citation_valid
+            else "Invalid",
         )
 
-    with col3:
+    with status_3:
 
         st.metric(
             "Answer",
-            (
-                "Validated"
-                if answer_valid
-                else "Refused"
-            ),
+            "Validated"
+            if answer_valid
+            else "Refused",
         )
 
-    with col4:
+    with status_4:
 
         st.metric(
             "Latency",
@@ -438,7 +419,6 @@ if "result" in st.session_state:
 
 
         cited_evidence = []
-
         additional_evidence = []
 
         for _, row in evidence.iterrows():
@@ -453,20 +433,13 @@ if "result" in st.session_state:
             )
 
             if chunk_id in cited_ids:
-
-                cited_evidence.append(
-                    row_data
-                )
-
+                cited_evidence.append(row_data)
             else:
-
-                additional_evidence.append(
-                    row_data
-                )
+                additional_evidence.append(row_data)
 
 
         # ----------------------------------------------------
-        # CITED CHUNKS
+        # CITED EVIDENCE
         # ----------------------------------------------------
 
         if cited_evidence:
@@ -502,7 +475,7 @@ if "result" in st.session_state:
                 )
 
                 st.markdown(
-                    f'<div class="evidence-title">'
+                    f'<div class="evidence-heading">'
                     f'[{chunk_id}] {section}'
                     f'</div>',
                     unsafe_allow_html=True,
@@ -528,19 +501,19 @@ if "result" in st.session_state:
             if is_refusal:
 
                 st.info(
-                    "No citation was required because "
-                    "the system refused the answer."
+                    "No citation is shown because the system "
+                    "refused the answer due to insufficient evidence."
                 )
 
             else:
 
-                st.warning(
+                st.info(
                     "No cited evidence was identified."
                 )
 
 
         # ----------------------------------------------------
-        # ADDITIONAL RETRIEVED EVIDENCE
+        # ADDITIONAL EVIDENCE
         # ----------------------------------------------------
 
         if additional_evidence:
@@ -598,85 +571,116 @@ if "result" in st.session_state:
 
 
     # ========================================================
-    # VALIDATION DETAILS
+    # VALIDATION SUMMARY
     # ========================================================
 
     st.divider()
 
-    with st.expander(
-        "Citation validation"
-    ):
+    st.subheader("Validation summary")
 
-        st.json(
-            citation_check
+    val_1, val_2, val_3 = st.columns(3)
+
+    with val_1:
+
+        if evidence_sufficient:
+            st.success("✓ Evidence sufficient")
+        else:
+            st.error("✗ Evidence insufficient")
+
+    with val_2:
+
+        if citation_valid:
+            st.success("✓ Citation valid")
+        else:
+            st.error("✗ Citation invalid")
+
+    with val_3:
+
+        if answer_valid:
+            st.success("✓ Answer validated")
+        elif is_refusal:
+            st.warning("⚠ Answer refused")
+        else:
+            st.error("✗ Answer failed validation")
+
+
+    # ========================================================
+    # CLAIM-LEVEL VALIDATION
+    # ========================================================
+
+    if claim_check:
+
+        st.markdown("### Claim-level grounding")
+
+        supported_count = sum(
+            bool(
+                item.get(
+                    "supported",
+                    False,
+                )
+            )
+            for item in claim_check
         )
 
+        total_count = len(claim_check)
 
-    with st.expander(
-        "Evidence sufficiency"
-    ):
-
-        st.json(
-            evidence_check
+        st.write(
+            f"{supported_count}/{total_count} claims supported"
         )
 
+        claim_rows = []
 
-    with st.expander(
-        "Claim-level NLI validation"
-    ):
+        for item in claim_check:
 
-        if claim_check:
-
-            claim_rows = []
-
-            for item in claim_check:
-
-                claim_rows.append(
-                    {
-                        "Status": item.get(
-                            "status",
-                            "",
-                        ),
-                        "Supported": item.get(
+            claim_rows.append(
+                {
+                    "Status": (
+                        "Supported"
+                        if item.get(
                             "supported",
                             False,
-                        ),
-                        "Entailment score": item.get(
-                            "best_entailment_score",
-                            None,
-                        ),
-                        "Citation IDs": ", ".join(
-                            map(
-                                str,
-                                item.get(
-                                    "cited_ids",
-                                    [],
-                                ),
+                        )
+                        else "Not supported"
+                    ),
+                    "Entailment score": round(
+                        float(
+                            item.get(
+                                "best_entailment_score",
+                                0,
                             )
                         ),
-                    }
-                )
-
-            st.dataframe(
-                pd.DataFrame(claim_rows),
-                use_container_width=True,
-                hide_index=True,
+                        3,
+                    ),
+                    "Citation IDs": ", ".join(
+                        map(
+                            str,
+                            item.get(
+                                "cited_ids",
+                                [],
+                            ),
+                        )
+                    ),
+                }
             )
 
-        else:
+        st.dataframe(
+            pd.DataFrame(claim_rows),
+            use_container_width=True,
+            hide_index=True,
+        )
 
-            st.info(
-                "No claims were generated."
-            )
+    else:
+
+        st.caption(
+            "No generated claims were available for validation."
+        )
 
 
     # ========================================================
     # QUERY DETAILS
     # ========================================================
 
-    with st.expander(
-        "Query details"
-    ):
+    with st.expander("Query details"):
 
         st.write(
             "**Original question**"
@@ -706,9 +710,12 @@ if "result" in st.session_state:
                 "**Cited evidence IDs**"
             )
 
-            st.code(
-                "\n".join(cited_ids)
-            )
+            for cid in cited_ids:
+
+                st.code(
+                    cid,
+                    language=None,
+                )
 
 
 # ============================================================
